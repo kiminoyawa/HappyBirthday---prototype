@@ -7,6 +7,7 @@ var pass = [];
 
 // Updated neon color palette
 var colors = ['#FF1C6A', '#E200A3', '#9B04DB', '#6D1DC6', '#448AFF', '#40C4FF', '#FFFF00', '#FFD740'];
+var bgColors = ['#0f2027', '#203a43', '#2c5364', '#1a1a1a', '#001f3f', '#000', '#2F4F4F', '#483D8B'];
 
 window.onresize = function() { reset(); }
 reset();
@@ -49,6 +50,9 @@ function newPass(shell) {
 
     if (pass.length < 1000) { pass.push(pas); }
   }
+  
+  // Change background color randomly when a firework explodes
+  document.body.style.background = bgColors[Math.floor(Math.random() * bgColors.length)];
 }
 
 var lastRun = 0;
