@@ -5,8 +5,8 @@ var cwidth, cheight;
 var shells = [];
 var pass = [];
 
-// Updated neon color palette
-var colors = ['#FF1C6A', '#E200A3', '#9B04DB', '#6D1DC6', '#448AFF', '#40C4FF', '#FFFF00', '#FFD740'];
+// Blue and purple color palette for fireworks
+var colors = ['#448AFF', '#40C4FF', '#536DFE', '#7C4DFF', '#651FFF', '#6200EA', '#673AB7', '#3D5AFE'];
 var bgColors = ['#0f2027', '#203a43', '#2c5364', '#1a1a1a', '#001f3f', '#000', '#2F4F4F', '#483D8B'];
 
 window.onresize = function() { reset(); }
@@ -62,7 +62,8 @@ function Run() {
   if (lastRun != 0) { dt = Math.min(50, (performance.now() - lastRun)); }
   lastRun = performance.now();
 
-  ctx.fillStyle = "rgba(0,0,0,0.25)";
+  // Clear canvas with transparent black to create a trail effect
+  ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
   ctx.fillRect(0, 0, cwidth, cheight);
 
   if ((shells.length < 10) && (Math.random() > 0.96)) { newShell(); }
@@ -70,10 +71,14 @@ function Run() {
   for (let ix in shells) {
     var shell = shells[ix];
 
+    // Draw neon glow effect for shells
     ctx.beginPath();
     ctx.arc(shell.x * cwidth, shell.y * cheight, shell.size, 0, 2 * Math.PI);
     ctx.fillStyle = shell.color;
+    ctx.shadowBlur = 20; // Glow effect
+    ctx.shadowColor = shell.color;
     ctx.fill();
+    ctx.shadowBlur = 0; // Reset shadow blur for next object
 
     shell.x -= shell.xoff;
     shell.y -= shell.yoff;
@@ -89,10 +94,14 @@ function Run() {
   for (let ix in pass) {
     var pas = pass[ix];
 
+    // Draw neon glow effect for particles
     ctx.beginPath();
     ctx.arc(pas.x, pas.y, pas.size, 0, 2 * Math.PI);
     ctx.fillStyle = pas.color;
+    ctx.shadowBlur = 15; // Glow effect for particles
+    ctx.shadowColor = pas.color;
     ctx.fill();
+    ctx.shadowBlur = 0; // Reset shadow blur for next object
 
     pas.x -= pas.xoff;
     pas.y -= pas.yoff;
